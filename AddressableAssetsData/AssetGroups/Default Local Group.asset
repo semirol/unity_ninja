@@ -1,0 +1,177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 90ce0d66718484cfdaa11b216049f60d
+  m_SerializeEntries:
+  - m_GUID: 2858097e9196a4b4891b173858f383f3
+    m_Address: Assets/AssetsPackage/
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1a9a5293e09c34bd6bb5bb54898bfee8
+    m_Address: Assets/AssetsPackage/MainCamera.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f6ae84fe4561d4ffe9678f68fab69875
+    m_Address: Assets/AssetsPackage/Characters
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dfd871539eb3d40d59f3896a89c9341a
+    m_Address: Assets/AssetsPackage/Effects
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 07b777c5673ca4a119fdfe3c2b66670f
+    m_Address: Assets/AssetsPackage/GUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8b9a55992221f4983b8c9d40d4d80a7b
+    m_Address: Assets/AssetsPackage/Maps
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2456e049f6bec4ac3b55b7cd33af6108
+    m_Address: Assets/AssetsPackage/Sounds
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 403875dc260a9450dad49bb498d475af
+    m_Address: Assets/AssetsPackage/Characters/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8927708a1d85340e59caea4d353d6699
+    m_Address: Assets/AssetsPackage/GUI/Battle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 74f97d119a0134bdaadd62bdc07e7d0d
+    m_Address: Assets/AssetsPackage/GUI/MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6f2948c77dc0247ef85a7c91eebb8785
+    m_Address: Assets/AssetsPackage/Maps/Meta
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b270221d8d8ea4a728fe0620f82fc486
+    m_Address: Assets/AssetsPackage/GUI/Battle/BattleGUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 239a5febbadf6449c9353d80a2caca2b
+    m_Address: Assets/AssetsPackage/GUI/Battle/BlinkButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5443c44921b064e8ea54f9a37d6e42e3
+    m_Address: Assets/AssetsPackage/GUI/Battle/Circle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e842d80b4199a47968df5d05578eb75e
+    m_Address: Assets/AssetsPackage/GUI/Battle/DartButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e4c3baf372012439c9b897cdf5d0cbd0
+    m_Address: Assets/AssetsPackage/GUI/Battle/EnergyWaveButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cfa84dae1108341a086363da9eadbed7
+    m_Address: Assets/AssetsPackage/GUI/Battle/ShieldButton.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6b9771096fee445e284039b421f05ed6
+    m_Address: Assets/AssetsPackage/GUI/MainMenu/261638604414_.pic.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a7177f5d53fd14bc6b4421075d36a46f
+    m_Address: Assets/AssetsPackage/GUI/MainMenu/MainMenu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f74cd181b62374b248b3c0dd49c66a2c
+    m_Address: Assets/AssetsPackage/Maps/Meta/Game.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c48962e0a73c74013bdd1739eb8ee3b0
+    m_Address: Assets/AssetsPackage/Maps/Meta/Map.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 404d000b692b8423bb6b75a8a7703737
+    m_Address: Assets/AssetsPackage/GUI/LogBar/LogBar.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6ca9f023b40b34ed9a7e68de80756930
+    m_Address: Assets/AssetsPackage/GUI/LogBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 372a578ec6b514aba9d4e50a89969292
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWaveMaterial.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 39c465cd0e526482bb4d1639a8b116c2
+    m_Address: Assets/AssetsPackage/Effects/Skills
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9ecdcca9432e145f7ba3eaa18b9dcea9
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2e353bb6b9bab42cdae429372151c3ab
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWave.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73227fd57b45a4e6c95b11b456bea2b8
+    m_Address: Assets/Scripts/Game/Skills
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7f4e2d2e860ba4be5a0a682be43c3954
+    m_Address: Assets/Scripts/Game/Skills/EnergyWave
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cccddaba41737481d962127d622351b4
+    m_Address: Assets/AssetsPackage/Maps/Meta/MAT_meta.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4f1b006b0e03a44529a4bb12b45eba16
+    m_Address: Assets/AssetsPackage/Characters/Player/PlayerAnimatorController.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 184d3edbe34404700b95abfdeee4d3fe
+    m_Address: Assets/AssetsPackage/Characters/Player/player.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f6b7a9d5ed49448e5b63c01b1a0d8dfe
+    m_Address: Assets/AssetsPackage/Characters/Player/Alpha_Joints_MAT.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 38a81865d7dd4464d98a344cb6ac6e9c
+    m_Address: Assets/AssetsPackage/Characters/Player/Alpha_Body_MAT.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5a895d335b12f44c0b862848d3627c0f
+    m_Address: Assets/AssetsPackage/Characters/Player/player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 50cc276441c6440f4b2f06400f62c02a
+    m_Address: ts/AssetsPackage/Sounds/MainMenu.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bdc5155d0731b49c2b6e85deec427110
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart/Dart.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 95b24cf6cdd4f421b8e0dae5c8cb7bbb
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: b7e3cb7ae430e447a9832525dba61ec0, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7fcbf4f43d9bb46d08614ca7b7090ea1, type: 2}
+    - {fileID: 11400000, guid: 978370f9db3c1491e9ff39e5808485ca, type: 2}
