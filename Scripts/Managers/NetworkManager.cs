@@ -12,8 +12,7 @@ namespace Managers
     public class NetWorkManager : UnitySingleton<NetWorkManager>
     {
         // 47.100.169.193
-        // 192.168.3.114
-        private static IPEndPoint _remote = new IPEndPoint(IPAddress.Parse("192.168.3.114"), 6700);
+        private static IPEndPoint _remote = new IPEndPoint(IPAddress.Parse("192.168.3.125"), 6700);
         
         private UdpClient _udpClient;
 
@@ -45,9 +44,17 @@ namespace Managers
             return MessageEncodingUtils.Decode(bytes);
         }
         
+        /**
+         * 接受指定类型的msg，其他直接丢弃
+         */
         public T Receive<T>() where T : NinjaMessage
         {
-            return Receive() as T;
+            T msg = null;
+            while (msg == null)
+            {
+                msg = Receive() as T;
+            }
+            return msg;
         }
     }
 }

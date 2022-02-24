@@ -1,85 +1,139 @@
-using System;
 using Core;
-using Core.FixedArithmetic;
+using Game;
 using Managers;
 using UnityEngine;
 using Utils;
 
-// todo 两个behaviour重构公共父类
-public class EnemyBehaviour : UnitySingleton<EnemyBehaviour>
+public class EnemyBehaviour : MonoBehaviour
 {
-
-    private FVector3 _logicPosition;
-    private Vector3 _virtualPosition;
-    
     private Animator _animator;
-
-    public readonly int Speed = 20;
     
-    public override void Awake()
+    private int _state = PlayerStateEnum.INVALID;
+    
+    private Rigidbody _rigidbody;
+    
+    public void Awake()
     {
-        base.Awake();
+        _rigidbody = GetComponent<Rigidbody>();
         _animator = gameObject.GetComponent<Animator>();
         _animator.avatar = ResourceManager.Instance.GetAssetFromShortPath<Avatar>("Characters/Player/player.fbx[playerAvatar]");
         _animator.runtimeAnimatorController = ResourceManager.Instance.GetAssetFromShortPath<RuntimeAnimatorController>("Characters/Player/PlayerAnimatorController.controller");
-        _logicPosition = new FVector3(transform.position);
-        _virtualPosition = transform.position;
     }
-
-    // Start is called before the first frame update
-    void Start()
+    
+    private void SetState(int state)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //切换动画
-        _animator.SetBool("ifWalk", true);
-        // 调整方向
-        if ((_virtualPosition - transform.position).magnitude > Single.Epsilon)
+        if (state == _state)
         {
-            // todo 有可能set 0向量，目前没有逻辑问题
-            transform.forward = Vector3.Lerp(transform.forward, _virtualPosition - transform.position, 2 * Constants.FRAME_FREQ * Time.deltaTime);
+            return;
         }
-        // 向虚拟位置匀速运动
-        transform.position = Vector3.Lerp(transform.position, _virtualPosition, Constants.FRAME_FREQ * Time.deltaTime);
-    }
-
-    private void LateUpdate()
-    {
+        else if (state == PlayerStateEnum.IDLE)
+        {
+            _animator.SetBool("ifWalk", false);
+        }
+        else if (state == PlayerStateEnum.MOVE)
+        {
+            _animator.SetBool("ifWalk", true);
+        }
     }
     
-    
-    //被BattleManager每次收到FrameMessage时调用
-    public void HandleEnemyOperation(BattleOperation operation)
+    public void HandlePlayerOperation(BattleOperation operation)
     {
-        if (operation.OperationType == OperationTypeEnum.STAY) return;
+        if (operation.OperationType == OperationTypeEnum.STAY)
+        {
+            SetState(PlayerStateEnum.IDLE);
+            DoStay();
+        }
         else if (operation.OperationType == OperationTypeEnum.MOVE)
         {
+            SetState(PlayerStateEnum.MOVE);
             UpdateLogicTransform(operation);
         }
         else if (operation.OperationType == OperationTypeEnum.WAVE)
         {
             DoEnergyWave(operation);
         }
+        else if (operation.OperationType == OperationTypeEnum.DART)
+        {
+            DoDart(operation);
+        }
+        else if (operation.OperationType == OperationTypeEnum.SHIELD)
+        {
+            DoShield(operation);
+        }
+        else if (operation.OperationType == OperationTypeEnum.BLINK)
+        {
+            DoBlink(operation);
+        }
     }
-
+    
+    private void DoStay()
+    {
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+    }
+    
     private void UpdateLogicTransform(BattleOperation operation)
     {
-        _logicPosition.X = operation.Position.X;
-        _logicPosition.Z = operation.Position.Z;
-        _virtualPosition = _logicPosition.ToVector3();
+        transform.position = operation.Position.ToVector3();
+        transform.rotation = Quaternion.Euler(0, operation.Direction, 0);
+        _rigidbody.velocity = transform.forward * Constants.PLAYER_MOVE_SPEED;
     }
     
     private void DoEnergyWave(BattleOperation operation)
     {
-        GameObject energyWavePrefab = ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>("Effects/Skills/EnergyWave/EnergyWave.prefab");
-        Quaternion skillRotation = Quaternion.Euler(0, operation.Direction, 0);
-        Vector3 offset = Quaternion.Euler(0, operation.Direction, 0) * Vector3.forward * 5;
-        GameObject energyWave = Instantiate(energyWavePrefab, _virtualPosition + offset, skillRotation);
-        energyWave.name = "EnemyEnergyWave";
+        GameObject energyWave = InstantiateByCondition(operation, "Effects/Skills/EnergyWave/EnergyWave.prefab",
+            gameObject.name + "EnergyWave", Constants.SKILL_OFFSET);
         energyWave.AddComponent<EnergyWaveBehaviour>().Init(operation);
+    }
+    
+    private void DoDart(BattleOperation operation)
+    {
+        GameObject dart = InstantiateByCondition(operation, "Effects/Skills/Dart/Dart.prefab",
+            gameObject.name + "Dart", Constants.SKILL_OFFSET);
+        dart.AddComponent<DartBehaviour>().Init(operation);
+    }
+    
+    private void DoShield(BattleOperation operation)
+    {
+        GameObject shield = InstantiateByCondition(operation, "Effects/Skills/Shield/Shield.prefab",
+            gameObject.name + "Shield", 0);
+        shield.AddComponent<ShieldBehaviour>().Init(operation);
+    }
+    
+    private void DoBlink(BattleOperation operation)
+    {
+        
+    }
+    
+    private GameObject InstantiateByCondition(BattleOperation operation, string path, string objectName, float skillOffset)
+    {
+        GameObject skillPrefab = ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>(path);
+        Quaternion skillRotation = Quaternion.Euler(0, operation.Direction, 0);
+        Vector3 offset = Quaternion.Euler(0, operation.Direction, 0) * Vector3.forward * skillOffset;
+        GameObject skill = Instantiate(skillPrefab, transform.position + offset, skillRotation);
+        skill.name = objectName;
+        return skill;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other);
+        if (other.name == GetEnemyName() + "EnergyWave")
+        {
+            BattleManager.Instance.HandleBattleEnd(gameObject.name);
+        }
+        else if (other.name == GetEnemyName() + "Dart")
+        {
+            BattleManager.Instance.HandleBattleEnd(gameObject.name);
+        }
+    }
+    
+    private string GetEnemyName()
+    {
+        if (gameObject.name == "Player")
+        {
+            return "Enemy";
+        }
+        return "Player";
     }
 }

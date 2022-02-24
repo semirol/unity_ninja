@@ -42,10 +42,7 @@ namespace Utils
                     bw.Write(operation.Position.X.Value);
                     bw.Write(operation.Position.Z.Value);
                 }
-                else
-                {
-                    bw.Write(operation.Direction);
-                }
+                bw.Write(operation.Direction);
             }
             bw.Flush();
             bw.Close();
@@ -60,6 +57,12 @@ namespace Utils
             if (messageTypeInt == NinjaMessageEnum.ROOM)
             {
                 NinjaRoomMessage message = new NinjaRoomMessage(br.ReadInt32());
+                return message;
+            }
+            else if (messageTypeInt == NinjaMessageEnum.OPERATION)
+            {
+                BattleOperation operation = ReadBattleOperation(br, 0);
+                NinjaOperationMessage message = new NinjaOperationMessage(operation);
                 return message;
             }
             else if (messageTypeInt == NinjaMessageEnum.FRAME)
@@ -91,8 +94,9 @@ namespace Utils
             {
                 long positionX = br.ReadInt64();
                 long positionZ = br.ReadInt64();
+                int direction = br.ReadInt32();
                 operation = new BattleOperation(frameNo, playerId, opType,
-                    FVector3.Original(positionX, 0, positionZ));
+                    direction, FVector3.Original(positionX, 0, positionZ));
             }
             else
             {

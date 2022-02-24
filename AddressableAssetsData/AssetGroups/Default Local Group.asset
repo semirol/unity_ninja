@@ -109,20 +109,12 @@ MonoBehaviour:
     m_Address: Assets/AssetsPackage/GUI/LogBar
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 372a578ec6b514aba9d4e50a89969292
-    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWaveMaterial.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 39c465cd0e526482bb4d1639a8b116c2
     m_Address: Assets/AssetsPackage/Effects/Skills
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 9ecdcca9432e145f7ba3eaa18b9dcea9
     m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2e353bb6b9bab42cdae429372151c3ab
-    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWave.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 73227fd57b45a4e6c95b11b456bea2b8
@@ -133,8 +125,8 @@ MonoBehaviour:
     m_Address: Assets/Scripts/Game/Skills/EnergyWave
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: cccddaba41737481d962127d622351b4
-    m_Address: Assets/AssetsPackage/Maps/Meta/MAT_meta.mat
+  - m_GUID: 8904f3e0fcce441e987c9a2841246b31
+    m_Address: Assets/AssetsPackage/Maps/Meta/MAT_MAP.mat
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4f1b006b0e03a44529a4bb12b45eba16
@@ -154,19 +146,119 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5a895d335b12f44c0b862848d3627c0f
-    m_Address: Assets/AssetsPackage/Characters/Player/player.prefab
+    m_Address: Assets/AssetsPackage/Characters/Player/Player.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 50cc276441c6440f4b2f06400f62c02a
-    m_Address: ts/AssetsPackage/Sounds/MainMenu.wav
+    m_Address: Assets/AssetsPackage/Sounds/MainMenu.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 95b24cf6cdd4f421b8e0dae5c8cb7bbb
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72680f664df534cea957ce52670d9436
+    m_Address: Assets/AssetsPackage/Effects/Skills/Shield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 06b591be4caf14da2997b1327327e426
+    m_Address: Assets/AssetsPackage/Effects/Skills/Shield/ShieldShader.shadergraph
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c77e0f5fc35fc4d55887692d5251da24
+    m_Address: Assets/AssetsPackage/Effects/Skills/Shield/Shield.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e9c6dd41e58b4411faaeb818845f7291
+    m_Address: Assets/AssetsPackage/Effects/Skills/Shield/Shield_vfx.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5fd854b7e79fe490ab2e35f8c7f5cba8
+    m_Address: Assets/AssetsPackage/Effects/Skills/Shield/Shield.blend
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: be67938400f264441ac28e354c6de5d5
+    m_Address: Assets/AssetsPackage/Effects/Skills/Shield/Shield.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6ea315d0fd7389c41b19996891e99ae3
+    m_Address: Assets/Scenes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 80f985bb6a8a54f429ee34c9dfa2f265
+    m_Address: Assets/Scenes/Main
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e891d31cb010848c4bd587786f9a491a
+    m_Address: Assets/Scenes/Main/Global Volume Profile.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 82a84f64f32e34d8cba56f210a627925
+    m_Address: Assets/Scenes/Main.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2ff0691aa8b0b4f05b7bd16d196a46d0
+    m_Address: Assets/AssetsPackage/MAT_Skyboxl.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c8c0dc0ed053e47009666c70e7d80194
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWaveShader.shadergraph
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7ffe1724c61fa4d659b549eabd03897c
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWave.blend
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e2804b75f0c904b29b25ba59743e5fa6
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWave.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a81e1a6b877794428bbbd175fd1cd5b4
+    m_Address: Assets/AssetsPackage/Effects/Skills/EnergyWave/EnergyWave_vfx.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cc33b52df76d347b7b32881065876ddb
+    m_Address: Assets/AssetsPackage/Effects/Skills/Blink
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5bb8318bd169246ad9b5e293f83cfa08
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart/DartShader.shadergraph
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4345acad4d64c4e869fbc6aec5339c9c
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart/MAT_Dart.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f0af335ad15c34818904b8aec3292018
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart/MAT_SubDart.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: baad516dc163a408c9dd46577737e148
+    m_Address: Assets/AssetsPackage/Effects/Skills/Dart/Dart_vfx.vfx
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: bdc5155d0731b49c2b6e85deec427110
     m_Address: Assets/AssetsPackage/Effects/Skills/Dart/Dart.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 95b24cf6cdd4f421b8e0dae5c8cb7bbb
-    m_Address: Assets/AssetsPackage/Effects/Skills/Dart
+  - m_GUID: 6ebcf6aa063654c28b65016fa2709fed
+    m_Address: Assets/AssetsPackage/Effects/Skills/Blink/Blink_vfx.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2abc2d0d7d2e344019b8a63c3674d68c
+    m_Address: Assets/AssetsPackage/Effects/Skills/Blink/Blink.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2153dffdfd78f44aa8fdf92d41265bfa
+    m_Address: Assets/AssetsPackage/Effects/Skills/Blink/BlinkShader.shadergraph
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cab232e4b76df40d1b0a2f1626581c9c
+    m_Address: Assets/AssetsPackage/Effects/Skills/Blink/AfterBlink_vfx.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4be44dcb1fe1d46dca4772080ad39203
+    m_Address: Assets/AssetsPackage/Effects/Skills/Blink/AfterBlink.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

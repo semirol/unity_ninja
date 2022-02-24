@@ -37,6 +37,7 @@ public class MainMenuBehaviour : MonoBehaviour
         else
         {
             LocalDataManager.Instance.Set("ifP1", roomMessage.IfP1);
+            
             GameApp.Instance.LoadBattleScene();
         }
     }

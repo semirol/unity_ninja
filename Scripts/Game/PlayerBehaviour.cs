@@ -1,62 +1,30 @@
 using System;
 using Core;
-using Core.FixedArithmetic;
 using Game;
 using Managers;
 using UnityEngine;
 using Utils;
 
-public class PlayerBehaviour : UnitySingleton<PlayerBehaviour>
+public class PlayerBehaviour : MonoBehaviour
 {
-    private Transform _mainCameraTransform;
-    private Vector3 _offset;
+    public static PlayerBehaviour Player;
 
+    public static PlayerBehaviour Enemy;
+    
     private Animator _animator;
 
-    private FVector3 _logicPosition;
-    private Vector3 _virtualPosition; // 从logicPosition开始每一帧的运动叠加到该位置，并将实际位置向该位置插值
-
     private int _state = PlayerStateEnum.INVALID;
+
+    private Rigidbody _rigidbody;
+
+    private BattleOperation _battleOperation;
     
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
+        _rigidbody = GetComponent<Rigidbody>();
         _animator = gameObject.GetComponent<Animator>();
         _animator.avatar = ResourceManager.Instance.GetAssetFromShortPath<Avatar>("Characters/Player/player.fbx[playerAvatar]");
         _animator.runtimeAnimatorController = ResourceManager.Instance.GetAssetFromShortPath<RuntimeAnimatorController>("Characters/Player/PlayerAnimatorController.controller");
-        
-        _mainCameraTransform = GameObject.Find("MainCamera").transform;
-        _offset = new Vector3(0, 100, -40);
-        
-        _logicPosition = new FVector3(transform.position);
-        _virtualPosition = transform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (InputManager.Instance.GetMoveDirection() != Vector3.zero)
-        {
-            //切换动画
-            SetState(PlayerStateEnum.MOVE);
-            // 调整方向
-            transform.rotation = Quaternion.Euler(0, Vector3.SignedAngle(Vector3.forward, 
-                InputManager.Instance.GetMoveDirection(), Vector3.up), 0);
-            // 计算偏移量
-            Vector3 offset = transform.forward * Constants.PLAYER_MOVE_SPEED * Time.deltaTime;
-            // 更新虚拟位置
-            _virtualPosition += offset;
-            // 本应到达的目的位置
-            Vector3 targetPosition = transform.position + offset;
-            // 向虚拟位置插值
-            Vector3 lerpPosition = Vector3.Lerp(targetPosition, _virtualPosition, Constants.FRAME_FREQ * Time.deltaTime);
-            transform.position = lerpPosition;
-        }
-        else
-        {
-            //切换动画
-            SetState(PlayerStateEnum.IDLE);
-        }
     }
 
     private void SetState(int state)
@@ -74,19 +42,17 @@ public class PlayerBehaviour : UnitySingleton<PlayerBehaviour>
             _animator.SetBool("ifWalk", true);
         }
     }
-    private void LateUpdate()
-    {
-        // _mainCameraTransform.position = transform.position + _offset;
-        _mainCameraTransform.position = Vector3.Lerp (_mainCameraTransform.position, transform.position + _offset, Time.deltaTime * 5f);
-    }
     
-    
-    //被BattleManager每次收到FrameMessage时调用
     public void HandlePlayerOperation(BattleOperation operation)
     {
-        if (operation.OperationType == OperationTypeEnum.STAY) return;
+        if (operation.OperationType == OperationTypeEnum.STAY)
+        {
+            SetState(PlayerStateEnum.IDLE);
+            DoStay();
+        }
         else if (operation.OperationType == OperationTypeEnum.MOVE)
         {
+            SetState(PlayerStateEnum.MOVE);
             UpdateLogicTransform(operation);
         }
         else if (operation.OperationType == OperationTypeEnum.WAVE)
@@ -95,7 +61,6 @@ public class PlayerBehaviour : UnitySingleton<PlayerBehaviour>
         }
         else if (operation.OperationType == OperationTypeEnum.DART)
         {
-            Debug.Log("dart");
             DoDart(operation);
         }
         else if (operation.OperationType == OperationTypeEnum.SHIELD)
@@ -108,64 +73,101 @@ public class PlayerBehaviour : UnitySingleton<PlayerBehaviour>
         }
     }
 
+    private void DoStay()
+    {
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+    }
+
     private void UpdateLogicTransform(BattleOperation operation)
     {
-        _logicPosition.X = operation.Position.X;
-        _logicPosition.Z = operation.Position.Z;
-        _virtualPosition = _logicPosition.ToVector3();
+        transform.position = operation.Position.ToVector3();
+        transform.rotation = Quaternion.Euler(0, operation.Direction, 0);
+        _rigidbody.velocity = transform.forward * Constants.PLAYER_MOVE_SPEED;
+        // Vector3 direction = InputManager.Instance.GetMoveDirection();
+        // transform.forward = direction;
+        // _rigidbody.velocity = transform.forward * Constants.PLAYER_MOVE_SPEED;
     }
+
+    // private void FixedUpdate()
+    // {
+    //     Vector3 direction = InputManager.Instance.GetMoveDirection();
+    //     transform.forward = direction;
+    //     // _rigidbody.velocity = transform.forward * Constants.PLAYER_MOVE_SPEED;
+    //     transform.position += transform.forward * Constants.PLAYER_MOVE_SPEED * Time.fixedDeltaTime;
+    // }
 
     private void DoEnergyWave(BattleOperation operation)
     {
         GameObject energyWave = InstantiateByCondition(operation, "Effects/Skills/EnergyWave/EnergyWave.prefab",
-            "PlayerEnergyWave", Constants.SKILL_OFFSET);
+            gameObject.name + "EnergyWave", Constants.SKILL_OFFSET);
         energyWave.AddComponent<EnergyWaveBehaviour>().Init(operation);
     }
 
     private void DoDart(BattleOperation operation)
     {
-        Debug.Log("dodart");
         GameObject dart = InstantiateByCondition(operation, "Effects/Skills/Dart/Dart.prefab",
-            "PlayerDart", Constants.SKILL_OFFSET);
+            gameObject.name + "Dart", Constants.SKILL_OFFSET);
         dart.AddComponent<DartBehaviour>().Init(operation);
     }
 
     private void DoShield(BattleOperation operation)
     {
         GameObject shield = InstantiateByCondition(operation, "Effects/Skills/Shield/Shield.prefab",
-            "PlayerShield", 0);
+            gameObject.name + "Shield", 0);
         shield.AddComponent<ShieldBehaviour>().Init(operation);
     }
 
     private void DoBlink(BattleOperation operation)
     {
+        GameObject blink = InstantiateByCondition(operation, "Effects/Skills/Blink/Blink.prefab",
+            gameObject.name + "Blink", 0);
+        blink.AddComponent<BlinkBehaviour>().Init(operation);
+        transform.rotation = Quaternion.Euler(0, operation.Direction, 0);
+        _rigidbody.MovePosition(transform.position + transform.forward * Constants.BLINK_DISTANCE);
+        _battleOperation = operation;
         
+        // todo 闪退，，
+        // Invoke(nameof(InvokeAfterBlink), 0.0f);
+        
+    }
+
+    private void InvokeAfterBlink()
+    {
+        GameObject afterBlink = InstantiateByCondition(_battleOperation, "Effects/Skills/Blink/AfterBlink.prefab",
+            gameObject.name + "AfterBlink", 0);
+        afterBlink.AddComponent<AfterBlinkBehaviour>().Init(_battleOperation);
     }
 
     private GameObject InstantiateByCondition(BattleOperation operation, string path, string objectName, float skillOffset)
     {
         GameObject skillPrefab = ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>(path);
         Quaternion skillRotation = Quaternion.Euler(0, operation.Direction, 0);
-        Vector3 offset = Quaternion.Euler(0, operation.Direction, 0) * Vector3.forward * skillOffset;
-        GameObject skill = Instantiate(skillPrefab, _virtualPosition + offset, skillRotation);
+        Vector3 offset = Quaternion.Euler(0, operation.Direction, 0) * Vector3.forward * skillOffset + new Vector3(0,1,0);
+        GameObject skill = Instantiate(skillPrefab, transform.position + offset, skillRotation);
         skill.name = objectName;
         return skill;
     }
 
-    public FVector3 GetLogicPosition()
-    {
-        return _logicPosition;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "EnemyEnergyWave")
+        Debug.Log(other);
+        if (other.name == GetEnemyName() + "EnergyWave")
         {
-            BattleManager.Instance.HandleBattleEndLose();
+            BattleManager.Instance.HandleBattleEnd(gameObject.name);
         }
-        else if (other.name == "EnemyDart")
+        else if (other.name == GetEnemyName() + "Dart")
         {
-            BattleManager.Instance.HandleBattleEndLose();
+            BattleManager.Instance.HandleBattleEnd(gameObject.name);
         }
+    }
+
+    private string GetEnemyName()
+    {
+        if (gameObject.name == "Player")
+        {
+            return "Enemy";
+        }
+        return "Player";
     }
 }

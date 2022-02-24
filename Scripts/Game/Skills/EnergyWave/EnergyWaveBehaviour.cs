@@ -2,31 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Core;
+using Game.Skills;
 using UnityEngine;
 using Utils;
 
-public class EnergyWaveBehaviour : MonoBehaviour
+public class EnergyWaveBehaviour : SkillBehaviour
 {
-    private BattleOperation _battleOperation;
-
-    private Rigidbody _rigidbody;
-
-    public void Init(BattleOperation battleOperation)
+    public override void Init(BattleOperation battleOperation)
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _battleOperation = battleOperation;
+        base.Init(battleOperation);
         Destroy (gameObject, Constants.ENERGY_WAVE_DURING_TIME);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    
     private void FixedUpdate()
     {
-        Vector3 offset = Quaternion.Euler(0, _battleOperation.Direction, 0)
+        Vector3 offset = Quaternion.Euler(0, BattleOperation.Direction, 0)
                          * Vector3.forward * Constants.ENERGY_WAVE_SPEED * Time.fixedDeltaTime;
-        _rigidbody.MovePosition(transform.position + offset);
+        Rigidbody.MovePosition(transform.position + offset);
     }
 }

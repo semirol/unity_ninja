@@ -15,6 +15,6 @@ public class BattleGUIBehaviour : MonoBehaviour
 
     private void OnSurrenderButtonClick()
     {
-        BattleManager.Instance.HandleSurrenderRequestSend();
+        BattleManager.Instance.HandleBattleEnd("Player");
     }
 }

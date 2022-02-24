@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Core;
+using Game.Skills;
 using UnityEngine;
 using Utils;
 
-public class ShieldBehaviour : MonoBehaviour
+public class ShieldBehaviour : SkillBehaviour
 {
-    private BattleOperation _battleOperation;
-
-    private Rigidbody _rigidbody;
-    public void Init(BattleOperation battleOperation)
+    private Transform _playerTransform;
+    public override void Init(BattleOperation battleOperation)
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _battleOperation = battleOperation;
+        base.Init(battleOperation);
+        _playerTransform = GameObject.Find(GetPlayerName()).transform;
         Destroy (gameObject, Constants.SHIELD_DURING_TIME);
+    }
+
+    public void Update()
+    {
+        transform.position = _playerTransform.position;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == GetEnemyName() + "EnergyWave")
+        {
+            Destroy(other.gameObject);
+        }
+        else if (other.name == GetEnemyName() + "Dart")
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

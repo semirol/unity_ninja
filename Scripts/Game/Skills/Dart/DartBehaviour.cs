@@ -1,24 +1,19 @@
-using System;
 using Core;
+using Game.Skills;
 using UnityEngine;
 using Utils;
 
-public class DartBehaviour : MonoBehaviour
+public class DartBehaviour : SkillBehaviour
 {
-    private BattleOperation _battleOperation;
-
-    private Rigidbody _rigidbody;
-    
     private bool _ifAutoTrack = false;
     
     private Transform _enemyTransform;
 
-    public void Init(BattleOperation battleOperation)
+    public override void Init(BattleOperation battleOperation)
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _battleOperation = battleOperation;
+        base.Init(battleOperation);
         
-        _enemyTransform = GameObject.Find("Enemy").transform;
+        _enemyTransform = GameObject.Find(GetEnemyName()).transform;
         if (IfFindEnemy())
         {
             Destroy(gameObject, Constants.DART_DURING_TIME);
@@ -49,6 +44,6 @@ public class DartBehaviour : MonoBehaviour
     {
         Vector3 direction = (_enemyTransform.position - transform.position).normalized;
         Vector3 offset = direction * Constants.DART_SPEED * Time.fixedDeltaTime;
-        _rigidbody.MovePosition(transform.position + offset);
+        Rigidbody.MovePosition(transform.position + offset);
     }
 }

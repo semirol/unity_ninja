@@ -1,4 +1,5 @@
 
+using System;
 using Core;
 using Managers;
 using UnityEngine;
@@ -20,13 +21,19 @@ public class GameApp : UnitySingleton<GameApp>
         UIManager.Instance.CleanBattleGUI();
         UIManager.Instance.LoadMainMenu();
         MapManager.Instance.Clean();
-        // todo 场景切换资源管理到底应该怎么做，,直接清空所有对象？
+        // todo 场景切换资源管理到底应该怎么做，直接清空所有对象？
         Destroy(GameObject.Find("Player"));
         Destroy(GameObject.Find("Enemy"));
     }
 
     public void LoadBattleScene()
     {
+        //加载技能prefab到缓存
+        ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>("Effects/Skills/EnergyWave/EnergyWave.prefab");
+        ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>("Effects/Skills/Shield/Shield.prefab");
+        ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>("Effects/Skills/Dart/Dart.prefab");
+        ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>("Effects/Skills/Blink/Blink.prefab");
+        ResourceManager.Instance.GetCachedAssetFromShortPath<GameObject>("Effects/Skills/Blink/AfterBlink.prefab");
         //加载战斗UI界面（摇杆、按键等）
         UIManager.Instance.CleanMainMenu();
         UIManager.Instance.LoadBattleGUI();
@@ -46,7 +53,7 @@ public class GameApp : UnitySingleton<GameApp>
     public void InitMainCamera()
     {
         GameObject mainCamera = ResourceManager.Instance.InstantiateFromShortPath("MainCamera.prefab");
-        mainCamera.transform.SetPositionAndRotation(new Vector3(0,100,0),Quaternion.Euler(70, 0, 0));
+        mainCamera.AddComponent<MainCameraBehaviour>();
     }
 
     public void InitPlayerAndEnemy()
@@ -55,12 +62,12 @@ public class GameApp : UnitySingleton<GameApp>
         GameObject playerPrefab = ResourceManager.Instance.GetAssetFromShortPath<GameObject>("Characters/Player/Player.prefab");
         Transform playerTransform = GameObject.Find("Game").transform.Find(ifP1 == 1 ? "P1Position" : "P2Position").transform;
         GameObject player = InstantiateUtils.InstantiateBySameName(playerPrefab, playerTransform.position, playerTransform.rotation);
-        player.AddComponent<PlayerBehaviour>();
+        PlayerBehaviour.Player = player.AddComponent<PlayerBehaviour>();
         // GameObject enemyPrefab = ResourceManager.Instance.GetAssetFromShortPath<GameObject>("Characters/Player/Enemy.prefab");
         Transform enemyTransform = GameObject.Find("Game").transform.Find(ifP1 == 1 ? "P2Position" : "P1Position").transform;
         GameObject enemy = Instantiate(playerPrefab, enemyTransform.position, enemyTransform.rotation);
         enemy.name = "Enemy";
-        enemy.AddComponent<EnemyBehaviour>();
+        PlayerBehaviour.Enemy = enemy.AddComponent<PlayerBehaviour>();
     }
 
 }

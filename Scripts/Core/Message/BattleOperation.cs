@@ -17,11 +17,12 @@ namespace Core
             OperationType = operationType;
             Direction = direction;
         }
-        public BattleOperation(int frameNo, int playerId, int operationType, FVector3 position)
+        public BattleOperation(int frameNo, int playerId, int operationType, int direction, FVector3 position)
         {
             FrameNo = frameNo;
             PlayerId = playerId;
             OperationType = operationType;
+            Direction = direction;
             Position = position;
         }
     }
